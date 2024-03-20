@@ -1,0 +1,66 @@
+en
+conf t
+hostname Internal-R3
+no ip domain lookup
+enable secret cisco
+line con 0
+logg s
+password cisco
+login
+exec-timeout 6
+exit
+service password-encryption
+banner motd #Unauthorized access is prohibited#
+int g0/0/0
+ip address 10.0.5.4 255.255.255.240
+Description Link to Edge-SW
+no shu
+int g0/0/1
+Description Main interface & Link to HR-SW
+no shu
+int g0/0/1.20
+encapsulation dot1q 20
+ip address 10.0.20.4 255.255.255.0
+glbp 20 ip 10.0.20.1
+glbp 20 preempt
+glbp 20 authentication md5 key-string b8baf803b48cae896394b26f2dc0c1b7
+no shu
+Description VLAN 20 IT Interface
+int g0/0/1.30
+encapsulation dot1q 30
+ip address 10.0.30.4 255.255.255.0
+glbp 30 ip 10.0.30.1
+glbp 30 preempt
+glbp 30 authentication md5 key-string b8baf803b48cae896394b26f2dc0c1b7
+no shu
+Description VLAN 30 Finance Interface
+int g0/0/1.40
+encapsulation dot1q 40
+ip address 10.0.40.4 255.255.255.0
+glbp 40 ip 10.0.40.1
+glbp 40 preempt
+glbp 40 authentication md5 key-string b8baf803b48cae896394b26f2dc0c1b7
+no shu
+Description VLAN 40 HR Interface
+int g0/0/1.60
+encapsulation dot1q 60
+ip address 10.0.60.4 255.255.255.0
+glbp 60 ip 10.0.60.1
+glbp 60 preempt
+glbp 60 authentication md5 key-string b8baf803b48cae896394b26f2dc0c1b7
+no shu
+Description VLAN 60 Servers Interface
+int g0/0/1.1000
+encapsulation dot1q 1000 native
+Description NATIVE VLAN
+int g0/0/1.50
+encapsulation dot1q 50
+ip address 10.0.50.3
+Description MANAGEMENT PURPOSES ONLY
+no shu
+int s0/1/0 
+ip address 10.0.5.34 255.255.255.248
+Description Link to Internal-R1
+no shu
+exit
+do wr

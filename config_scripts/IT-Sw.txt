@@ -1,0 +1,64 @@
+en
+conf t
+no ip domain lookup
+hostname IT-Switch
+enable secret cisco
+line con 0
+password cisco
+login
+exit
+service password-encryption
+banner motd #Unauthorized access is prohibited#
+do wr
+vlan 20
+name IT
+vlan 30
+name Finance
+vlan 40
+name HR
+vlan 50
+name Management
+vlan 60
+name Servers
+vlan 1000
+name Native
+vlan 666
+name Blackhole
+exit
+int vlan 50
+ip address 10.0.50.4 255.255.255.0
+Description Management purposes
+no shu
+exit
+ip default-gateway 10.0.20.1
+int f0/24
+Description IT-PC port
+switchport mode access
+switchport access vlan 20
+switchport nonegotiate
+no shu
+int f0/23
+Description AD-Server
+switchport mode access
+switchport access vlan 60
+switchport nonegotiate
+no shu
+int f0/1
+Description Trunk to Internal-R2
+switchport mode trunk
+switchport trunk allowed vlan 20,30,40,50,60,1000
+switchport trunk native vlan 1000
+switchport nonegotiate
+no shu
+int r f0/10-16
+Description EtherChannel with Finance-SW
+channel-group 1 mode on
+int po1
+Description EtherChannel with Finance-SW
+switchport mode trunk
+switchport mode trunk
+switchport trunk allowed vlan 20,30,40,50,60,1000
+switchport trunk native vlan 1000
+switchport nonegotiate
+no shu
+exit
