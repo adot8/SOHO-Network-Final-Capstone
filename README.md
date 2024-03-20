@@ -2,7 +2,7 @@
 ![Alt Text](./pics/topology.png)
 ## Mission
 The goal of the project was to have a fully functional SOHO Network environment built on physical equipment and included:
-* Cisco ASA Firewalls
+* Cisco ASA Firewalls (Bonus)
 * Routers
 * Switches
 * Wireless Access Point (Bonus)
